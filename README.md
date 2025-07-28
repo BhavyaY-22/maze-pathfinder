@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Maze Pathfinder
 
-## Getting Started
+A visual maze-solving application built with Next.js and Tailwind CSS. Users can draw walls, set start/end points, and visualize the A* pathfinding algorithm in action.
 
-First, run the development server:
+-------
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Live Demo: https://maze-pathfinder-one.vercel.app/
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-------
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Features:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- A* pathfinding visualization
+- Toggle to draw and erase walls
+- Set your own start and goal nodes
+- Count the number of visited nodes and the final path length
 
-## Learn More
+-------
 
-To learn more about Next.js, take a look at the following resources:
+Tech Stack:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js
+- React
+- Tailwind CSS
+- HTML/CSS/JavaScript
+- ESLint
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+-------
 
-## Deploy on Vercel
+Folder Structure:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+maze-pathfinder/
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+├── src/app
+     └── components/
+            ├── action.js
+ 	    ├── count.js
+	    ├── cell.js
+	    └── grid.js
+├── src/app/
+     └── page.js
+     ├── layout.js
+     └── global.css
+├── public/
+├── README.md
+
+-------
+
+## Architecture Overview
+
+The Maze Pathfinder is a React application built using the Next.js framework. It provides a visual and interactive simulation of the A* pathfinding algorithm on a 2D grid.
+
+
+### Component Breakdown
+
+#### Grid.js
+- Renders the entire maze as a 2D grid.
+- Composed of multiple `Cell` components.
+- Handles the structure and passes interaction events down to individual cells.
+
+#### Cell.js
+- Represents a single cell in the grid (wall, empty, start, goal, visited, path).
+- Receives props like `row`, `col`, `type`, and `onClick`.
+- Applies conditional styling and classes based on the cell type.
+- It focuses only on display and UI interaction for its cell.
+
+#### Actions.js
+- Provides UI controls to:
+  - Select mode (`draw`, `start`, `goal`)
+  - Trigger maze solving
+  - Reset grid
+
+#### Count.js
+- Displays real-time statistics such as:
+  - Total visited nodes
+  - Final path length
+
+#### page.js
+- The main component that:
+  - Initializes and manages the grid state
+  - Implements the A* pathfinding algorithm
+  - Coordinates user interactions and updates
+  - Handles animations and state transitions
+
+
+### Application Flow
+
+1. **User Interaction**
+   - Users click on cells to define walls, start, and goal positions.
+   - Interaction is routed from `Cell → Grid → Page`.
+
+2. **State & Algorithm Execution**
+   - On “Solve”, the app executes the A* algorithm.
+   - It calculates the optimal path, updates visited cells, and animates the result.
+   - Uses `useState` and `useCallback` to manage state efficiently.
+
+3. **UI Update**
+   - Grid cells change type (e.g., from empty to visited to path).
+   - `Cell.js` re-renders automatically via props.
