@@ -97,3 +97,13 @@ The Maze Pathfinder is a React application built using the Next.js framework. It
 3. **UI Update**
    - Grid cells change type (e.g., from empty to visited to path).
    - `Cell.js` re-renders automatically via props.
+
+-------
+
+Clone the repo and install dependencies:
+
+```bash
+git clone [https://github.com/BhavyaY-22/maze-pathfinder.git]
+cd maze-pathfinder
+npm install
+npm run dev
